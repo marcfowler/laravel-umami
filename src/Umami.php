@@ -136,6 +136,26 @@ class Umami
                 'country' => null,
                 'region' => null,
                 'city' => null,
+
+    /**
+     * Add a new event to the specified website.
+     *
+     * @param string $siteID
+     * @param array $eventData
+     * @param array|null $authData
+     * @return mixed
+     * @throws RequestException
+     */
+    public static function addEvent(string $siteID, array $eventData, $authData = null): mixed
+    {
+        $response = Http::withToken(self::auth($authData))
+            ->post(config('umami.url') . '/websites/' . $siteID . '/events', $eventData);
+
+        $response->throw();
+
+        return $response->json();
+    }
+
             ],
             'events' => [
                 'unit' => 'day',
@@ -156,6 +176,25 @@ class Umami
                 'country' => null,
                 'region' => null,
                 'city' => null,
+
+    /**
+     * Get real-time data for the specified website.
+     *
+     * @param string $siteID
+     * @param array|null $authData
+     * @return mixed
+     * @throws RequestException
+     */
+    public static function realtime(string $siteID, $authData = null): mixed
+    {
+        $response = Http::withToken(self::auth($authData))
+            ->get(config('umami.url') . '/websites/' . $siteID . '/realtime');
+
+        $response->throw();
+
+        return $response->json();
+    }
+
             ],
             'active' => [],
             'event-data-events' => [
