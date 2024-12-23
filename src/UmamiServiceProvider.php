@@ -13,6 +13,11 @@ class UmamiServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
+
+        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'umami');
+
                 __DIR__.'/../config/config.php' => config_path('umami.php'),
             ], 'umami-config');
         }
